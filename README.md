@@ -1,1 +1,0 @@
-# jamenormal.github.io

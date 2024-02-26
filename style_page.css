@@ -24,8 +24,8 @@ html {
   --bs-nav-tabs-link-active-border-color: #00000080;
 }
 .content {
-  /*background-color: bisque;
-    padding: 2rem 0;*/
+  /*background-color: bisque;*/
+    padding: 2rem 0;
 }
 .join_button {
 }
