@@ -28,8 +28,6 @@ html {
   /*background-color: bisque;*/
     padding: 2rem 0;
 }
-.join_button {
-}
 
 .joiner, form{
   padding: 20px;
@@ -52,9 +50,6 @@ html {
 .join_button_space {
   /*background-color: rgb(255, 0, 0);*/
   text-align: right;
-}
-
-.join_button:hover {
 }
 
 form{

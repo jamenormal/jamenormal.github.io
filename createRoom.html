@@ -21,10 +21,10 @@
           <a class="nav-link" href="index.html"><i class="fa fa-home"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="pageA.html">Paying</a>
+          <a class="nav-link" href="paying.html">Paying</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="pageB.html">Loaning</a>
+          <a class="nav-link" href="loaning.html">Loaning</a>
         </li>
         <li class="nav-item create-room">
           <a class="nav-link active" aria-current="page" href="#">Create Room</a>
@@ -34,20 +34,21 @@
     <form action="#">
         <label for="์name"><p>ชื่อ</p>
             <div class="input-group">
-                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" id="name" placeholder="ใส่ชื่อของท่าน">
+                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" id="name" placeholder="ใส่ชื่อของท่าน" required oninvalid="this.setCustomValidity('โปรดใส่ชื่อของท่าน')" oninput="setCustomValidity('')">
               </div>
         </label>
         <label for="minmax"><p>ยอดต่ำสุด-สูงสุด</p>
             <div class="input-group">
-                <input type="text" aria-label="First name" class="form-control" placeholder="ยอดต่ำสุด">
-                <input type="text" aria-label="Last name" class="form-control" placeholder="ยอดสูงสุด">
+                <input type="number" aria-label="First name" class="form-control" placeholder="ยอดต่ำสุด" required oninvalid="this.setCustomValidity('โปรดใส่ยอดต่ำสุดของท่าน')" oninput="setCustomValidity('')">
+                <input type="number" aria-label="Last name" class="form-control" placeholder="ยอดสูงสุด" required oninvalid="this.setCustomValidity('โปรดใส่ยอดสูงสุดของท่าน')" oninput="setCustomValidity('')">
                 <div class="input-group-prepend">
                     <span class="input-group-text">THB</span>
                   </div>
               </div>
         </label>
+        <input type="submit" name="" id="createRoom" value="สร้างห้อง" class="btn btn-primary">
     </form>
-    <input type="submit" name="" id="createRoom" value="สร้างห้อง" class="btn btn-primary">
+   
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
