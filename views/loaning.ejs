@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paying</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style_page.css" />
+  </head>
+  <body>
+    <ul class="nav nav-tabs kuay">
+      <li class="nav-item">
+        <a class="nav-link" href="/index"><i class="fa fa-home"></i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " aria-current="page" href="paying">Paying</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Loaning</a>
+      </li>
+      <li class="nav-item create-room">
+        <a class="nav-link" href="loaningCreateRoom">Create Room</a>
+      </li>
+    </ul>
+    <section id="content" class="content"></section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+      const socket = io("/loaning");
+      const content = document.getElementById("content");
+      socket.on("readUsersData", (usersData) => {
+        for (let i in usersData) {
+          const joiner = document.createElement("div");
+          joiner.className = "joiner";
+          const pName = document.createElement("p");
+          const strongName = document.createElement("strong");
+          strongName.textContent = usersData[i].userName;
+          const total = document.createElement("div");
+          total.className = "total";
+          const total_text = document.createElement("p");
+          total_text.className = "total_text";
+          const minmax = document.createElement("strong");
+          minmax.textContent = `${usersData[i].minPrice} - ${usersData[i].maxPrice} THB`;
+          const joinButtonSpace = document.createElement("div");
+          joinButtonSpace.className = "join_button_space";
+          const linkButton = document.createElement("a");
+          linkButton.href = "chat1";
+          const joinButton = document.createElement("button");
+          joinButton.className = "btn btn-outline-success join_button";
+          joinButton.textContent = "JOIN";
+          linkButton.appendChild(joinButton);
+          joinButtonSpace.appendChild(linkButton);
+          total_text.appendChild(minmax);
+          total.appendChild(total_text);
+          total.appendChild(joinButtonSpace);
+          pName.appendChild(strongName);
+          joiner.appendChild(pName);
+          joiner.appendChild(total);
+          content.appendChild(joiner);
+        }
+      });
+    </script>
+  </body>
+</html>

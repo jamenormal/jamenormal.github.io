@@ -73,7 +73,7 @@
         e.preventDefault();
         if (input.value) {
           socket.emit("chat message", input.value);
-          input.value = "";
+          input.value = ""
         }
       });
 
@@ -83,6 +83,13 @@
         messages.appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);
       });
+
+      socket.on('welcome',(data)=>{
+        const item = document.createElement("li");
+        item.textContent = data;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      })
     </script>
   </body>
 </html>

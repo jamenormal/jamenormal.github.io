@@ -1,0 +1,81 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  background: url(Background.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-align: center;
+}
+.nav {
+  background-color: #ffffff80;
+}
+
+.create-room {
+  margin-left: auto;
+}
+.nav-item {
+  font-family: "Caveat";
+  font-size: 1.5rem;
+}
+.nav-tabs {
+  --bs-nav-tabs-link-active-bg: #00000080;
+  --bs-nav-tabs-link-active-border-color: #00000080;
+}
+.content {
+  /*background-color: bisque;*/
+    padding: 2rem 0;
+}
+
+.joiner, form{
+  padding: 20px;
+  margin:3vh auto;
+  background-color: #ffffff80;
+  border-color: #ffffff80;
+  border-radius: 1rem;
+  max-width: 600px;
+}
+
+@media only screen and (max-width: 657px) {
+    
+    .joiner, form{
+        padding: 20px;
+        margin:3vh 4vw;
+        border-radius: 1rem;
+        
+      }
+  }
+.join_button_space {
+  /*background-color: rgb(255, 0, 0);*/
+  text-align: right;
+}
+
+form{
+    padding:20px 5%;
+}
+
+p, label{
+    width:100%;
+    text-align: left;
+}
+
+#createRoom{
+    border-radius: 300px;
+}
+
+@media only screen and (max-width: 376px) {
+    a{
+        font-size: 1rem;
+    }
+  }
+
+  .sdf{
+    background-color: aqua;
+  }
+
+  .total{
+    display:flex;
+  }
+
