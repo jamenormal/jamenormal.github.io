@@ -26,10 +26,13 @@
         <a class="nav-link" href="/index"><i class="fa fa-home"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Paying</a>
+        <a class="nav-link active2" aria-current="page" href="#">Paying</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="loaning">Loaning</a>
+      </li>
+      <li class="nav-item">
+        <a href="chat"><button id="join-room"></button></a>
       </li>
       <li class="nav-item create-room">
         <a class="nav-link" href="payingCreateRoom">Create Room</a>
@@ -44,15 +47,20 @@
 
     <script src="socket.io/socket.io.js"></script>
     <script>
-      const socket = io("/paying");
+      const socket = io();
       const content = document.getElementById("content");
-      socket.on("readUsersData", (usersData) => {
+      socket.on("readPayingUsersData", (usersData) => {
+        console.log(usersData)
         for (let i in usersData) {
           const joiner = document.createElement("div");
           joiner.className = "joiner";
+          joiner.id = 'joiner';
           const pName = document.createElement("p");
           const strongName = document.createElement("strong");
           strongName.textContent = usersData[i].userName;
+          const room = document.createElement('p');
+          room.id = usersData[i].room;
+          room.textContent = usersData[i].room;
           const total = document.createElement("div");
           total.className = "total";
           const total_text = document.createElement("p");
@@ -61,18 +69,20 @@
           minmax.textContent = `${usersData[i].minPrice} - ${usersData[i].maxPrice} THB`;
           const joinButtonSpace = document.createElement("div");
           joinButtonSpace.className = "join_button_space";
-          const linkButton = document.createElement("a");
-          linkButton.href = "chat1";
+          /* const linkButton = document.createElement("a");
+          linkButton.href = "chat";
+          linkButton.target = '_blank'; */
           const joinButton = document.createElement("button");
           joinButton.className = "btn btn-outline-success join_button";
           joinButton.textContent = "JOIN";
-          linkButton.appendChild(joinButton);
-          joinButtonSpace.appendChild(linkButton);
+          /* linkButton.appendChild(joinButton); */
+          joinButtonSpace.appendChild(joinButton);
           total_text.appendChild(minmax);
           total.appendChild(total_text);
           total.appendChild(joinButtonSpace);
           pName.appendChild(strongName);
           joiner.appendChild(pName);
+          joiner.appendChild(room);
           joiner.appendChild(total);
           content.appendChild(joiner);
         }
@@ -82,9 +92,13 @@
         for (let i in usersData) {
           const joiner = document.createElement("div");
           joiner.className = "joiner";
+          joiner.id = 'joiner';
           const pName = document.createElement("p");
           const strongName = document.createElement("strong");
           strongName.textContent = usersData[i].userName;
+          const room = document.createElement('p');
+          room.id = usersData[i].room;
+          room.textContent = usersData[i].room;
           const total = document.createElement("div");
           total.className = "total";
           const total_text = document.createElement("p");
@@ -93,21 +107,27 @@
           minmax.textContent = `${usersData[i].minPrice} - ${usersData[i].maxPrice} THB`;
           const joinButtonSpace = document.createElement("div");
           joinButtonSpace.className = "join_button_space";
-          const linkButton = document.createElement("a");
-          linkButton.href = "chat1";
+          /* const linkButton = document.createElement("a");
+          linkButton.href = "chat";
+          linkButton.target = '_blank'; */
           const joinButton = document.createElement("button");
           joinButton.className = "btn btn-outline-success join_button";
           joinButton.textContent = "JOIN";
-          linkButton.appendChild(joinButton);
-          joinButtonSpace.appendChild(linkButton);
+          /* linkButton.appendChild(joinButton); */
+          joinButtonSpace.appendChild(joinButton);
           total_text.appendChild(minmax);
           total.appendChild(total_text);
           total.appendChild(joinButtonSpace);
           pName.appendChild(strongName);
           joiner.appendChild(pName);
+          joiner.appendChild(room);
           joiner.appendChild(total);
           content.appendChild(joiner);
         }
+      });
+      const joiner = document.getElementById('join-room');
+      joiner.addEventListener('click',()=>{
+        ss.emit('join','sdf');
       });
     </script>
   </body>

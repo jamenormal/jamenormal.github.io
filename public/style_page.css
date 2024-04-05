@@ -9,9 +9,14 @@ html {
   background-size: cover;
   text-align: center;
 }
+
 .nav {
-  background-color: #ffffff80;
+  background-color: #ffffffca;
+  position: fixed;
+  width: 100vw;
+  transition: 0.5s;
 }
+
 
 .create-room {
   margin-left: auto;
@@ -19,6 +24,7 @@ html {
 .nav-item {
   font-family: "Caveat";
   font-size: 1.5rem;
+  transition: 0.5s;
 }
 .nav-tabs {
   --bs-nav-tabs-link-active-bg: #00000080;
@@ -26,7 +32,7 @@ html {
 }
 .content {
   /*background-color: bisque;*/
-    padding: 2rem 0;
+    padding: 5rem 0;
 }
 
 .joiner, form{
@@ -36,6 +42,15 @@ html {
   border-color: #ffffff80;
   border-radius: 1rem;
   max-width: 600px;
+  transition: 0.5s;
+}
+
+.joiner:hover, form:hover, .nav:hover{
+  box-shadow: 0 0 10px blue;
+}
+.nav-item:hover{
+  background-color: #fffffff3 ;
+
 }
 
 @media only screen and (max-width: 657px) {
@@ -79,3 +94,6 @@ p, label{
     display:flex;
   }
 
+.active2{
+  background-color: azure;
+}

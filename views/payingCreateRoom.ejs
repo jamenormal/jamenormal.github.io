@@ -30,7 +30,7 @@
           <a class="nav-link active" aria-current="page" href="#">Create Room</a>
         </li>
       </ul>
-    <div class="content">
+    <div id = 'content' class="content">
     <form action="#" id = "form">
         <label for="์name"><p>ชื่อ</p>
             <div class="input-group">
@@ -52,19 +52,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="socket.io/socket.io.js"></script>
     <script>
-      const socket = io('/paying');
+      const socket = io();
       const form = document.getElementById('form')
       const username = document.getElementById('name');
       const minPrice = document.getElementById('min');
       const maxPrice = document.getElementById('max');
       const createRoomButton = document.getElementById('createRoom');
+      const content = document.getElementById('content');
 
       form.addEventListener("submit", () => {
-        socket.emit('sendUsersData',{
+        socket.emit('sendPayingUsersData',{
             userName: username.value,
             minPrice: minPrice.value,
             maxPrice: maxPrice.value
-        })
+        });
+        content.textContent = ""
+        const success = document.createElement('p');
+        success.textContent = 'สร้างห้องสำเร็จ';
+        const joinRoom = document.createElement('button');
+        const joinRoomLink = document.createElement('a');
+        joinRoomLink.href = 'chat';
+        joinRoomLink.textContent = 'เข้าห้อง';
+        joinRoom.appendChild(joinRoomLink);
+        content.appendChild(success);
+        content.appendChild(joinRoom);
       });
     </script>
 </body>

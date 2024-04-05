@@ -44,7 +44,7 @@
 
     <script src="socket.io/socket.io.js"></script>
     <script>
-      const socket = io("/loaning");
+      const socket = io("");
       const content = document.getElementById("content");
       socket.on("readUsersData", (usersData) => {
         for (let i in usersData) {

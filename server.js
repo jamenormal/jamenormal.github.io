@@ -7,14 +7,12 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 const port = 3000;
-const payingSocket = io.of("/paying");
+/* const payingSocket = io.of("/paying"); */
 const loaningSocket = io.of("/loaning");
 const createRoomSocket = io.of("/createRoom");
-let room = 1;
-var payingPageRoomData = [
-  { userName: "mini", minPrice: "2", maxPrice: "3" },
-  { userName: "heart", minPrice: "4", maxPrice: "5" },
-];
+let room = "a";
+var payingPageRoomData = [];
+var payingRoomQuery = [];
 
 var loaningPageRoomData = [
   { userName: "iron", minPrice: "6", maxPrice: "7" },
@@ -59,25 +57,26 @@ app.get("/payingCreateRoom", (req, res) => {
   res.render("payingCreateRoom");
 });
 
-app.get("/chat1", (req, res) => {
-  res.sendFile(join(__dirname, "chatRoom.html"));
+app.get("/success", (req, res) => {
+  res.render("success");
 });
 
-app.get("/chat2", (req, res) => {
-  res.sendFile(join(__dirname, "chatRoom.html"));
+app.get("/chat", (req, res) => {
+  res.render("chatRoom");
 });
 
-payingSocket.on("connection", (socket) => {
+/* payingSocket.on("connection", (socket) => {
   console.log("a user connected in paying page");
   socket.emit("readUsersData", payingPageRoomData);
   socket.on("sendUsersData", (data) => {
     payingPageRoomData.push(data);
-    payingSocket.emit("update", payingPageRoomData);
   });
   socket.on("disconnect", () => {
     console.log("user disconnected in paying page");
+    payingSocket.emit("update", payingPageRoomData);
+    console.log("package is sending");
   });
-});
+}); */
 
 loaningSocket.on("connection", (socket) => {
   console.log("a user connected in paying page");
@@ -88,16 +87,31 @@ loaningSocket.on("connection", (socket) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
-  io.sockets.emit("welcome", "some user has been in the room");
-  room++;
-  socket.on("chat message", (msg) => {
-    console.log("message: " + msg);
-    io.emit("chat message", msg);
+  console.log('connect');
+  /* socket.on('join',(data)=>{
+    socket.join(data);
+    console.log(data)
+  }); */
+  socket.emit("readPayingUsersData", payingPageRoomData);
+  socket.on("sendPayingUsersData", (data) => {
+    data.room = room;
+    payingPageRoomData.push(data);
+    payingRoomQuery.push(data);
+    console.log(payingRoomQuery);
+    room+="a";
+    io.emit('update',payingPageRoomData);
   });
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-    socket.emit("welcome", "some user has been in the room");
+  /* socket.emit("welcome",'kuay'); */
+  socket.on('joinPayingChat',()=>{
+    socket.join(payingRoomQuery[0].room);
+    io.to(payingRoomQuery[0].room).emit("welcome",payingRoomQuery[0].room);
+    payingRoomQuery.shift();
+  });
+  socket.on('chat message', (msg) => {
+    console.log(msg);
+    io.to(msg.room).emit('chat message', msg.message);
+  });
+  socket.on('disconnect',()=>{
   });
 });
 
