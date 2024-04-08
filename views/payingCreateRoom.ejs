@@ -61,7 +61,7 @@
       const content = document.getElementById('content');
 
       form.addEventListener("submit", () => {
-        socket.emit('sendPayingUsersData',{
+        socket.emit('sendPayingUsersDataCreateRoom',{
             userName: username.value,
             minPrice: minPrice.value,
             maxPrice: maxPrice.value
@@ -71,7 +71,7 @@
         success.textContent = 'สร้างห้องสำเร็จ';
         const joinRoom = document.createElement('button');
         const joinRoomLink = document.createElement('a');
-        joinRoomLink.href = 'chat';
+        joinRoomLink.href = 'chat1';
         joinRoomLink.textContent = 'เข้าห้อง';
         joinRoom.appendChild(joinRoomLink);
         content.appendChild(success);

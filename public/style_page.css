@@ -25,6 +25,8 @@ html {
   font-family: "Caveat";
   font-size: 1.5rem;
   transition: 0.5s;
+  display: flex;
+  align-items: center;
 }
 .nav-tabs {
   --bs-nav-tabs-link-active-bg: #00000080;
@@ -35,7 +37,7 @@ html {
     padding: 5rem 0;
 }
 
-.joiner, form{
+.joiner, form:not(.join-room-form){
   padding: 20px;
   margin:3vh auto;
   background-color: #ffffff80;
@@ -45,7 +47,7 @@ html {
   transition: 0.5s;
 }
 
-.joiner:hover, form:hover, .nav:hover{
+.joiner:hover, form:hover:not(.join-room-form), .nav:hover {
   box-shadow: 0 0 10px blue;
 }
 .nav-item:hover{
@@ -55,7 +57,7 @@ html {
 
 @media only screen and (max-width: 657px) {
     
-    .joiner, form{
+    .joiner, form:not(.join-room-form){
         padding: 20px;
         margin:3vh 4vw;
         border-radius: 1rem;
@@ -96,4 +98,23 @@ p, label{
 
 .active2{
   background-color: azure;
+}
+
+.join-room-li{
+  display:flex;
+}
+.join-room-form{
+  padding: 0;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  font-size: 1rem;
+}
+
+.no-room{
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.682);
+  display: flex;
+  justify-content: center;
+  text-shadow: 0 0 5px black;
 }

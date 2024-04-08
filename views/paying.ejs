@@ -32,7 +32,15 @@
         <a class="nav-link" href="loaning">Loaning</a>
       </li>
       <li class="nav-item">
-        <a href="chat"><button id="join-room"></button></a>
+        <form action="" class="join-room-form" id="join-room-form">
+          <input
+            type="text"
+            name=""
+            id="join-room-input"
+            placeholder="ใส่หมายเลขห้อง"
+          />
+          <button id="join-room-button" class="btn btn-primary">เข้าห้อง</button>
+        </form>
       </li>
       <li class="nav-item create-room">
         <a class="nav-link" href="payingCreateRoom">Create Room</a>
@@ -49,37 +57,41 @@
     <script>
       const socket = io();
       const content = document.getElementById("content");
+      let room = [];
       socket.on("readPayingUsersData", (usersData) => {
-        console.log(usersData)
+        console.log(usersData.length);
+        if(usersData.length == 0){
+          const noRoom = document.createElement('p');
+          noRoom.className = "no-room"
+          noRoom.textContent = "ไม่มีห้องที่ถูกสร้าง"
+          content.appendChild(noRoom);
+        }
         for (let i in usersData) {
           const joiner = document.createElement("div");
           joiner.className = "joiner";
-          joiner.id = 'joiner';
+          joiner.id = "joiner";
           const pName = document.createElement("p");
           const strongName = document.createElement("strong");
           strongName.textContent = usersData[i].userName;
-          const room = document.createElement('p');
+          const room = document.createElement("p");
           room.id = usersData[i].room;
-          room.textContent = usersData[i].room;
+          room.textContent = "Room: " + usersData[i].room;
           const total = document.createElement("div");
           total.className = "total";
           const total_text = document.createElement("p");
           total_text.className = "total_text";
           const minmax = document.createElement("strong");
           minmax.textContent = `${usersData[i].minPrice} - ${usersData[i].maxPrice} THB`;
-          const joinButtonSpace = document.createElement("div");
+          /* const joinButtonSpace = document.createElement("div");
           joinButtonSpace.className = "join_button_space";
-          /* const linkButton = document.createElement("a");
+          const linkButton = document.createElement("a");
           linkButton.href = "chat";
-          linkButton.target = '_blank'; */
+          linkButton.target = '_blank';
           const joinButton = document.createElement("button");
           joinButton.className = "btn btn-outline-success join_button";
-          joinButton.textContent = "JOIN";
-          /* linkButton.appendChild(joinButton); */
-          joinButtonSpace.appendChild(joinButton);
+          joinButton.textContent = "JOIN"; */
           total_text.appendChild(minmax);
           total.appendChild(total_text);
-          total.appendChild(joinButtonSpace);
           pName.appendChild(strongName);
           joiner.appendChild(pName);
           joiner.appendChild(room);
@@ -88,36 +100,35 @@
         }
       });
       socket.on("update", (usersData) => {
+        console.log(usersData.length);
         content.textContent = "";
+        console.log(usersData);
         for (let i in usersData) {
           const joiner = document.createElement("div");
           joiner.className = "joiner";
-          joiner.id = 'joiner';
+          joiner.id = "joiner";
           const pName = document.createElement("p");
           const strongName = document.createElement("strong");
           strongName.textContent = usersData[i].userName;
-          const room = document.createElement('p');
+          const room = document.createElement("p");
           room.id = usersData[i].room;
-          room.textContent = usersData[i].room;
+          room.textContent = "Room: " + usersData[i].room;
           const total = document.createElement("div");
           total.className = "total";
           const total_text = document.createElement("p");
           total_text.className = "total_text";
           const minmax = document.createElement("strong");
           minmax.textContent = `${usersData[i].minPrice} - ${usersData[i].maxPrice} THB`;
-          const joinButtonSpace = document.createElement("div");
+          /* const joinButtonSpace = document.createElement("div");
           joinButtonSpace.className = "join_button_space";
-          /* const linkButton = document.createElement("a");
+          const linkButton = document.createElement("a");
           linkButton.href = "chat";
-          linkButton.target = '_blank'; */
+          linkButton.target = '_blank';
           const joinButton = document.createElement("button");
           joinButton.className = "btn btn-outline-success join_button";
-          joinButton.textContent = "JOIN";
-          /* linkButton.appendChild(joinButton); */
-          joinButtonSpace.appendChild(joinButton);
+          joinButton.textContent = "JOIN"; */
           total_text.appendChild(minmax);
           total.appendChild(total_text);
-          total.appendChild(joinButtonSpace);
           pName.appendChild(strongName);
           joiner.appendChild(pName);
           joiner.appendChild(room);
@@ -125,9 +136,24 @@
           content.appendChild(joiner);
         }
       });
-      const joiner = document.getElementById('join-room');
-      joiner.addEventListener('click',()=>{
-        ss.emit('join','sdf');
+      const joinRoomForm = document.getElementById("join-room-form");
+      const joinRoomInput = document.getElementById("join-room-input");
+      const joinRoomButton = document.getElementById("join-room-button");
+      joinRoomForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (joinRoomInput.value) {
+          socket.emit("sendPayingUsersDataJoinRoom", Number(joinRoomInput.value));
+        }
+        content.textContent = "";
+        const success = document.createElement("p");
+        success.textContent = "สร้างห้องสำเร็จ";
+        const joinRoom = document.createElement("button");
+        const joinRoomLink = document.createElement("a");
+        joinRoomLink.href = "chat2";
+        joinRoomLink.textContent = "เข้าห้อง";
+        joinRoom.appendChild(joinRoomLink);
+        content.appendChild(success);
+        content.appendChild(joinRoom);
       });
     </script>
   </body>

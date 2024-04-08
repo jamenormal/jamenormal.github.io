@@ -10,9 +10,10 @@ const port = 3000;
 /* const payingSocket = io.of("/paying"); */
 const loaningSocket = io.of("/loaning");
 const createRoomSocket = io.of("/createRoom");
-let room = "a";
+let room = 1;
 var payingPageRoomData = [];
-var payingRoomQuery = [];
+var payingCreateRoomQuery = [];
+var payingJoinRoomQuery = [];
 
 var loaningPageRoomData = [
   { userName: "iron", minPrice: "6", maxPrice: "7" },
@@ -61,8 +62,12 @@ app.get("/success", (req, res) => {
   res.render("success");
 });
 
-app.get("/chat", (req, res) => {
-  res.render("chatRoom");
+app.get("/chat1", (req, res) => {
+  res.render("chatRoomCreate");
+});
+
+app.get("/chat2", (req, res) => {
+  res.render("chatRoomJoin");
 });
 
 /* payingSocket.on("connection", (socket) => {
@@ -93,20 +98,35 @@ io.on("connection", (socket) => {
     console.log(data)
   }); */
   socket.emit("readPayingUsersData", payingPageRoomData);
-  socket.on("sendPayingUsersData", (data) => {
+  socket.emit("readLoaningUsersData", loaningPageRoomData);
+  socket.on("sendPayingUsersDataCreateRoom", (data) => {
     data.room = room;
     payingPageRoomData.push(data);
-    payingRoomQuery.push(data);
-    console.log(payingRoomQuery);
-    room+="a";
+    payingCreateRoomQuery.push(data);
+    console.log(payingCreateRoomQuery);
+    room+=1;
     io.emit('update',payingPageRoomData);
   });
-  /* socket.emit("welcome",'kuay'); */
-  socket.on('joinPayingChat',()=>{
-    socket.join(payingRoomQuery[0].room);
-    io.to(payingRoomQuery[0].room).emit("welcome",payingRoomQuery[0].room);
-    payingRoomQuery.shift();
+
+  socket.on("sendPayingUsersDataJoinRoom", (data) => {
+    console.log('send');
+    payingJoinRoomQuery.push(data);
+    console.log(payingJoinRoomQuery);
   });
+
+  /* socket.emit("welcome",'kuay'); */
+  socket.on('createPayingChat',()=>{
+    socket.join(payingCreateRoomQuery[0].room);
+    io.to(payingCreateRoomQuery[0].room).emit("welcome",payingCreateRoomQuery[0].room);
+    payingCreateRoomQuery.shift();
+  });
+
+  socket.on('joinPayingChat',()=>{
+    socket.join(payingJoinRoomQuery[0]);
+    io.to(payingJoinRoomQuery[0]).emit("welcome",payingJoinRoomQuery[0]);
+    payingJoinRoomQuery.shift();
+  });
+
   socket.on('chat message', (msg) => {
     console.log(msg);
     io.to(msg.room).emit('chat message', msg.message);
